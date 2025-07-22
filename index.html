@@ -40,6 +40,7 @@
       font-size: 2em;
       color: #fff;
       text-shadow: 1px 1px 3px #000;
+      margin: 10px 0;
     }
 
     .intro button {
@@ -118,6 +119,22 @@
     .btn:hover {
       opacity: 0.9;
     }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-text {
+      animation: fadeInUp 1s ease-out forwards;
+      opacity: 0;
+    }
   </style>
 </head>
 <body>
@@ -125,7 +142,7 @@
   <!-- INTRO SECTION -->
   <div class="section intro active" id="intro">
     <h1>04 AGUSTUS 2025</h1>
-    <h1>🎉 Happy Birthday Kevin 🎉</h1>
+    <h1 class="animate-text">🎉 Happy Birthday Kevin 🎉</h1>
     <button onclick="showCard()">Klik Disini!</button>
   </div>
 
@@ -149,17 +166,14 @@
 
   <script>
     function showCard() {
-      // Sembunyikan intro
       document.getElementById('intro').classList.remove('active');
 
-      // Munculkan kartu dengan animasi fade-in
       const card = document.getElementById('cardSection');
       card.classList.add('active');
       setTimeout(() => {
         card.classList.remove('fade-in');
       }, 50);
 
-      // Putar musik
       playMusic();
     }
 
