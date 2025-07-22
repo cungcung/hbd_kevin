@@ -15,6 +15,22 @@
       justify-content: center;
       height: 100vh;
       overflow: hidden;
+      flex-direction: column;
+    }
+
+    .fixed-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 1.1em;
+      font-weight: bold;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
     .section {
@@ -23,6 +39,7 @@
       align-items: center;
       text-align: center;
       transition: opacity 0.8s ease, transform 0.8s ease;
+      margin-top: 60px; /* supaya tidak tertutup header */
     }
 
     .active {
@@ -34,21 +51,6 @@
     .fade-in {
       opacity: 0;
       transform: translateY(30px);
-    }
-
-    .intro-header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: #4CAF50;
-      color: white;
-      padding: 15px 0;
-      font-size: 1.2em;
-      font-weight: bold;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      z-index: 10;
     }
 
     .intro h1 {
@@ -154,9 +156,11 @@
 </head>
 <body>
 
+  <!-- HEADER HIJAU ATAS -->
+  <div class="fixed-header">04 AGUSTUS 2025</div>
+
   <!-- INTRO SECTION -->
   <div class="section intro active" id="intro">
-    <div class="intro-header">04 AGUSTUS 2025</div>
     <h1 class="animate-text">🎉 Happy Birthday Kevin 🎉</h1>
     <button onclick="showCard()">Klik Disini!</button>
   </div>
@@ -177,7 +181,7 @@
   </div>
 
   <!-- Confetti Canvas -->
-  <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; pointer-events:none; z-index:100;"></canvas>
+  <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; pointer-events:none; z-index:999;"></canvas>
 
   <audio id="bgMusic" src="musik.mp3"></audio>
 
@@ -210,7 +214,7 @@
       });
     }
 
-    // CONFETTI EFFECT
+    // CONFETTI
     window.onload = () => {
       confetti();
     };
