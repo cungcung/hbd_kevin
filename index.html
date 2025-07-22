@@ -36,6 +36,21 @@
       transform: translateY(30px);
     }
 
+    .intro-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #4CAF50;
+      color: white;
+      padding: 15px 0;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
     .intro h1 {
       font-size: 2em;
       color: #fff;
@@ -141,7 +156,7 @@
 
   <!-- INTRO SECTION -->
   <div class="section intro active" id="intro">
-    <h1>04 AGUSTUS 2025</h1>
+    <div class="intro-header">04 AGUSTUS 2025</div>
     <h1 class="animate-text">🎉 Happy Birthday Kevin 🎉</h1>
     <button onclick="showCard()">Klik Disini!</button>
   </div>
@@ -156,24 +171,24 @@
       </p>
       <div class="separator"></div>
       <div class="from">- Dari : Papa -</div>
-
       <button class="btn btn-close" onclick="backToIntro()">Tutup Kartu</button>
       <div class="icon-gift">🎁</div>
     </div>
   </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; pointer-events:none; z-index:100;"></canvas>
 
   <audio id="bgMusic" src="musik.mp3"></audio>
 
   <script>
     function showCard() {
       document.getElementById('intro').classList.remove('active');
-
       const card = document.getElementById('cardSection');
       card.classList.add('active');
       setTimeout(() => {
         card.classList.remove('fade-in');
       }, 50);
-
       playMusic();
     }
 
@@ -181,7 +196,6 @@
       const card = document.getElementById("cardSection");
       card.classList.remove('active');
       card.classList.add('fade-in');
-
       document.getElementById('intro').classList.add('active');
 
       const audio = document.getElementById("bgMusic");
@@ -192,8 +206,75 @@
     function playMusic() {
       const audio = document.getElementById("bgMusic");
       audio.play().catch((e) => {
-        console.log("Autoplay diblokir, pengguna perlu klik tombol:", e);
+        console.log("Autoplay diblokir:", e);
       });
+    }
+
+    // CONFETTI EFFECT
+    window.onload = () => {
+      confetti();
+    };
+
+    function confetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      let W = window.innerWidth;
+      let H = window.innerHeight;
+      canvas.width = W;
+      canvas.height = H;
+
+      const confettis = [];
+      const confettiCount = 150;
+      const colors = ['#fde132', '#009bde', '#ff6b00', '#00e676', '#e91e63'];
+
+      for (let i = 0; i < confettiCount; i++) {
+        confettis.push({
+          x: Math.random() * W,
+          y: Math.random() * H - H,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * confettiCount,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          tilt: Math.floor(Math.random() * 10) - 10,
+          tiltAngleIncremental: (Math.random() * 0.07) + .05,
+          tiltAngle: 0
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = 0; i < confettiCount; i++) {
+          const conf = confettis[i];
+          ctx.beginPath();
+          ctx.lineWidth = conf.r;
+          ctx.strokeStyle = conf.color;
+          ctx.moveTo(conf.x + conf.tilt + conf.r / 2, conf.y);
+          ctx.lineTo(conf.x + conf.tilt, conf.y + conf.tilt + conf.r / 2);
+          ctx.stroke();
+        }
+        update();
+      }
+
+      function update() {
+        for (let i = 0; i < confettiCount; i++) {
+          const conf = confettis[i];
+          conf.tiltAngle += conf.tiltAngleIncremental;
+          conf.y += (Math.cos(conf.d) + 3 + conf.r / 2) / 2;
+          conf.x += Math.sin(conf.d);
+          conf.tilt = Math.sin(conf.tiltAngle - i / 3) * 15;
+
+          if (conf.y > H) {
+            conf.y = -10;
+            conf.x = Math.random() * W;
+          }
+        }
+      }
+
+      function loop() {
+        draw();
+        requestAnimationFrame(loop);
+      }
+
+      loop();
     }
   </script>
 
