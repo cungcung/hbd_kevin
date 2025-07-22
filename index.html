@@ -18,19 +18,27 @@
       flex-direction: column;
     }
 
+    @keyframes wiggle {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-2px); }
+      50% { transform: translateX(2px); }
+      75% { transform: translateX(-1px); }
+    }
+
     .fixed-header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background: #4CAF50;
+      background: linear-gradient(to right, #8e2de2, #4a00e0);
       color: white;
       text-align: center;
-      padding: 12px 0;
-      font-size: 1.1em;
+      padding: 14px 0;
+      font-size: 1.6em;
       font-weight: bold;
       z-index: 1000;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      animation: wiggle 1.5s ease-in-out infinite;
     }
 
     .section {
@@ -138,14 +146,8 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .animate-text {
@@ -178,7 +180,6 @@
       100% { transform: translateX(-100%); }
     }
 
-    /* MOBILE RESPONSIVE */
     @media (max-width: 600px) {
       .card {
         max-width: 90%;
@@ -200,8 +201,8 @@
       }
 
       .fixed-header {
-        font-size: 1em;
-        padding: 10px 0;
+        font-size: 1.2em;
+        padding: 12px 0;
       }
 
       .marquee {
@@ -213,7 +214,7 @@
 </head>
 <body>
 
-  <!-- HEADER ATAS -->
+  <!-- HEADER -->
   <div class="fixed-header">04 AGUSTUS 2025</div>
 
   <!-- INTRO -->
@@ -222,7 +223,7 @@
     <button onclick="showCard()">Klik Disini!</button>
   </div>
 
-  <!-- KARTU UCAPAN -->
+  <!-- KARTU -->
   <div class="section fade-in" id="cardSection">
     <div class="card" id="card">
       <div class="icon-heart">❤️</div>
@@ -247,7 +248,7 @@
     </p>
   </div>
 
-  <!-- MUSIK -->
+  <!-- AUDIO -->
   <audio id="bgMusic" src="musik.mp3"></audio>
 
   <!-- SCRIPT -->
