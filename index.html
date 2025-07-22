@@ -156,6 +156,7 @@
     function showCard() {
       document.getElementById('intro').classList.remove('active');
       document.getElementById('cardSection').classList.add('active');
+      playMusic();
     }
 
     function backToIntro() {
@@ -168,7 +169,9 @@
 
     function playMusic() {
       const audio = document.getElementById("bgMusic");
-      audio.play();
+      audio.play().catch((e) => {
+        console.log("Autoplay diblokir, pengguna perlu klik tombol:", e);
+      });
     }
   </script>
 
