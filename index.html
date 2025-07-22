@@ -14,6 +14,7 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      overflow: hidden;
     }
 
     .section {
@@ -21,10 +22,18 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+      transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
     .active {
       display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
     }
 
     .intro h1 {
@@ -121,7 +130,7 @@
   </div>
 
   <!-- CARD SECTION -->
-  <div class="section" id="cardSection">
+  <div class="section fade-in" id="cardSection">
     <div class="card" id="card">
       <div class="icon-heart">❤️</div>
       <p>
@@ -136,18 +145,31 @@
     </div>
   </div>
 
-  <audio id="bgMusic" src="https://cungcung.github.io/kartu-ulang-tahun/happybirthday.mp3"></audio>
+  <audio id="bgMusic" src="musik.mp3"></audio>
 
   <script>
     function showCard() {
+      // Sembunyikan intro
       document.getElementById('intro').classList.remove('active');
-      document.getElementById('cardSection').classList.add('active');
+
+      // Munculkan kartu dengan animasi fade-in
+      const card = document.getElementById('cardSection');
+      card.classList.add('active');
+      setTimeout(() => {
+        card.classList.remove('fade-in');
+      }, 50);
+
+      // Putar musik
       playMusic();
     }
 
     function backToIntro() {
-      document.getElementById('cardSection').classList.remove('active');
+      const card = document.getElementById("cardSection");
+      card.classList.remove('active');
+      card.classList.add('fade-in');
+
       document.getElementById('intro').classList.add('active');
+
       const audio = document.getElementById("bgMusic");
       audio.pause();
       audio.currentTime = 0;
