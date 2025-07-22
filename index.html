@@ -39,7 +39,7 @@
       align-items: center;
       text-align: center;
       transition: opacity 0.8s ease, transform 0.8s ease;
-      margin-top: 60px; /* supaya tidak tertutup header */
+      margin-top: 60px; /* untuk menghindari header */
     }
 
     .active {
@@ -152,20 +152,45 @@
       animation: fadeInUp 1s ease-out forwards;
       opacity: 0;
     }
+
+    .marquee {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px 0;
+      z-index: 999;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee p {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 20s linear infinite;
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER HIJAU ATAS -->
+  <!-- HEADER ATAS -->
   <div class="fixed-header">04 AGUSTUS 2025</div>
 
-  <!-- INTRO SECTION -->
+  <!-- INTRO -->
   <div class="section intro active" id="intro">
     <h1 class="animate-text">🎉 Happy Birthday Kevin 🎉</h1>
     <button onclick="showCard()">Klik Disini!</button>
   </div>
 
-  <!-- CARD SECTION -->
+  <!-- KARTU UCAPAN -->
   <div class="section fade-in" id="cardSection">
     <div class="card" id="card">
       <div class="icon-heart">❤️</div>
@@ -180,11 +205,20 @@
     </div>
   </div>
 
-  <!-- Confetti Canvas -->
-  <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; pointer-events:none; z-index:999;"></canvas>
+  <!-- CONFETTI -->
+  <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; pointer-events:none; z-index:998;"></canvas>
 
+  <!-- TEKS BERJALAN -->
+  <div class="marquee">
+    <p>
+      Selamat ulang tahun Kevin! 🎂 Semoga langkahmu selalu dimudahkan, impianmu digenggam dengan senyum, dan harimu penuh cinta dan tawa. Papa selalu bangga! 💖
+    </p>
+  </div>
+
+  <!-- MUSIK -->
   <audio id="bgMusic" src="musik.mp3"></audio>
 
+  <!-- SCRIPT -->
   <script>
     function showCard() {
       document.getElementById('intro').classList.remove('active');
@@ -201,7 +235,6 @@
       card.classList.remove('active');
       card.classList.add('fade-in');
       document.getElementById('intro').classList.add('active');
-
       const audio = document.getElementById("bgMusic");
       audio.pause();
       audio.currentTime = 0;
@@ -214,7 +247,6 @@
       });
     }
 
-    // CONFETTI
     window.onload = () => {
       confetti();
     };
@@ -281,6 +313,5 @@
       loop();
     }
   </script>
-
 </body>
 </html>
