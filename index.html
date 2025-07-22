@@ -16,6 +16,34 @@
       height: 100vh;
     }
 
+    .section {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .active {
+      display: flex;
+    }
+
+    .intro h1 {
+      font-size: 2em;
+      color: #fff;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    .intro button {
+      padding: 15px 25px;
+      font-size: 1em;
+      background: #ff4081;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
     .card {
       background: rgba(255, 255, 255, 0.9);
       padding: 30px;
@@ -95,33 +123,54 @@
   </style>
 </head>
 <body>
-  <div class="card" id="card">
-    <div class="icon-heart">❤️</div>
-    <p>
-      Selamat ulang tahun, anakku Kevin! Semoga tahun ini makin banyak kebahagiaan, rezeki lancar,
-      dan segala impian jadi kenyataan. Semoga panjang umur dan sehat selalu! 🎂🎉
-    </p>
-    <div class="separator"></div>
-    <div class="from">- Dari : Papa -</div>
 
-    <button class="btn btn-music" onclick="playMusic()">Putar Musik 🎵</button>
-    <button class="btn btn-close" onclick="backToIntro()">Tutup Kartu</button>
+  <!-- INTRO SECTION -->
+  <div class="section intro active" id="intro">
+    <h1>04 AGUSTUS 2025</h1>
+    <h1>🎉 Happy Birthday Kevin 🎉</h1>
+    <button onclick="showCard()">Klik Disini!</button>
+  </div>
 
-    <div class="audio-info">🔊 Klik di sini untuk memutar musik</div>
-    <div class="icon-gift">🎁</div>
+  <!-- CARD SECTION -->
+  <div class="section" id="cardSection">
+    <div class="card" id="card">
+      <div class="icon-heart">❤️</div>
+      <p>
+        Selamat ulang tahun, anakku Kevin! Semoga tahun ini makin banyak kebahagiaan, rezeki lancar,
+        dan segala impian jadi kenyataan. Semoga panjang umur dan sehat selalu! 🎂🎉
+      </p>
+      <div class="separator"></div>
+      <div class="from">- Dari : Papa -</div>
+
+      <button class="btn btn-music" onclick="playMusic()">Putar Musik 🎵</button>
+      <button class="btn btn-close" onclick="backToIntro()">Tutup Kartu</button>
+
+      <div class="audio-info">🔊 Klik di sini untuk memutar musik</div>
+      <div class="icon-gift">🎁</div>
+    </div>
   </div>
 
   <audio id="bgMusic" src="musik.mp3"></audio>
 
   <script>
+    function showCard() {
+      document.getElementById('intro').classList.remove('active');
+      document.getElementById('cardSection').classList.add('active');
+    }
+
+    function backToIntro() {
+      document.getElementById('cardSection').classList.remove('active');
+      document.getElementById('intro').classList.add('active');
+      const audio = document.getElementById("bgMusic");
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
     function playMusic() {
       const audio = document.getElementById("bgMusic");
       audio.play();
     }
-
-    function backToIntro() {
-      window.location.href = "index.html"; // ganti dengan nama halaman intro kamu kalau berbeda
-    }
   </script>
+
 </body>
 </html>
